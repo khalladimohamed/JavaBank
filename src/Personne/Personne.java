@@ -61,4 +61,7 @@ public abstract class Personne {
         return Objects.equals(nom, personne.nom) && Objects.equals(prenom, personne.prenom) && Objects.equals(dateNaiss, personne.dateNaiss);
     }
 
+
 }
+
+

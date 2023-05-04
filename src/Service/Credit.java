@@ -98,4 +98,24 @@ public class Credit extends ServiceBancaire {
         return Objects.equals(montant, credit.montant) && Objects.equals(tauxInteret, credit.tauxInteret) && Objects.equals(employe, credit.employe) && Objects.equals(dateSignature, credit.dateSignature);
     }
 
+    public static void main(String[] args) {
+        // Création d'un employé
+        Employe employe = new Employe("John", "Doe", new Date(), "01", new Date());
+
+        // Création d'un client
+        Client client = new Client("Boo", "Mark", new Date(), 12345, "Ingénieur", 5000f);
+
+        // Création d'un crédit
+        Credit credit = new Credit(1, client, 10000f, 0.05f, employe, new Date());
+
+        // Affichage des informations sur le crédit
+        System.out.println(credit);
+
+        // Modification du montant du crédit
+        credit.setMontant(15000f);
+
+        // Affichage des informations sur le crédit modifié
+        System.out.println(credit);
+    }
+
 }

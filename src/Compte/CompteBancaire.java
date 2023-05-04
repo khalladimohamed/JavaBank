@@ -2,6 +2,7 @@ package Compte;
 
 import Personne.Client;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class CompteBancaire {
@@ -60,6 +61,23 @@ public class CompteBancaire {
         if (o == null || getClass() != o.getClass()) return false;
         CompteBancaire that = (CompteBancaire) o;
         return numCompte == that.numCompte && Objects.equals(solde, that.solde) && Objects.equals(client, that.client);
+    }
+
+    public static void main(String[] args) {
+        // Création d'un client
+        Client client1 = new Client("Doe", "John", new Date(), 12345, "Ingénieur", 5000f);
+
+        // Création d'un compte bancaire
+        CompteBancaire compte1 = new CompteBancaire(123456, 1000f, client1);
+
+        // Affichage du compte bancaire
+        System.out.println(compte1);
+
+        // Modification du solde du compte bancaire
+        compte1.setSolde(2000f);
+
+        // Affichage du compte bancaire après modification
+        System.out.println(compte1);
     }
 
 }

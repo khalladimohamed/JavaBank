@@ -1,14 +1,24 @@
 package Service;
 
+import Compte.CompteBancaire;
 import Personne.Client;
 
 import java.util.Date;
 import java.util.Objects;
 
 public class CarteBancaire extends ServiceBancaire {
+    private CompteBancaire Compte;
     private String type;
     private Float plafond;
     private Date dateRemise;
+
+    public CompteBancaire getCompte() {
+        return Compte;
+    }
+
+    public void setCompte(CompteBancaire compte) {
+        Compte = compte;
+    }
 
     public String getType() {
         return type;
@@ -46,13 +56,15 @@ public class CarteBancaire extends ServiceBancaire {
 
     public CarteBancaire() {
         super();
+        Compte = null;
         this.type = "";
         this.plafond = Float.valueOf(0);
         this.dateRemise = new Date();
     }
 
-    public CarteBancaire(int numService, Client client, String type, Float plafond, Date dateRemise) {
+    public CarteBancaire(int numService, Client client, CompteBancaire compte, String type, Float plafond, Date dateRemise) {
         super(numService, client);
+        Compte = compte;
         this.type = type;
         this.plafond = plafond;
         this.dateRemise = dateRemise;
@@ -61,7 +73,8 @@ public class CarteBancaire extends ServiceBancaire {
     @Override
     public String toString() {
         return "CarteBancaire{" +
-                "type='" + type + '\'' +
+                "Compte=" + Compte +
+                ", type='" + type + '\'' +
                 ", plafond=" + plafond +
                 ", dateRemise=" + dateRemise +
                 ", numService=" + numService +
@@ -75,7 +88,21 @@ public class CarteBancaire extends ServiceBancaire {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         CarteBancaire that = (CarteBancaire) o;
-        return Objects.equals(type, that.type) && Objects.equals(plafond, that.plafond) && Objects.equals(dateRemise, that.dateRemise);
+        return Objects.equals(Compte, that.Compte) && Objects.equals(type, that.type) && Objects.equals(plafond, that.plafond) && Objects.equals(dateRemise, that.dateRemise);
+    }
+
+    public static void main(String[] args) {
+        // Création d'un client
+        Client client = new Client("Boo", "Mark", new Date(), 12345, "Ingénieur", 5000f);
+
+        // Création d'un compte bancaire
+        CompteBancaire compte = new CompteBancaire(12, 500F, client);
+
+        // Création d'une carte bancaire
+        CarteBancaire carte = new CarteBancaire(2, client, compte, "Visa", 1000.0f, new Date());
+
+        // Affichage des informations de la carte bancaire
+        System.out.println(carte);
     }
 
 }

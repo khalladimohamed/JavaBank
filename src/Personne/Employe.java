@@ -1,5 +1,7 @@
 package Personne;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -59,5 +61,40 @@ public class Employe extends Personne{
         Employe employe = (Employe) o;
         return Objects.equals(idEmploye, employe.idEmploye) && Objects.equals(dateEmbouche, employe.dateEmbouche);
     }
+
+    public static void main(String[] args) {
+        // Création d'un objet Employe
+        Employe employe = new Employe();
+        employe.setNom("Doe");
+        employe.setPrenom("John");
+
+        // Formatage de la date
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date dateNaiss = null;
+        try {
+            dateNaiss = sdf.parse("01/01/1990");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        employe.setDateNaiss(dateNaiss);
+
+        employe.setIdEmploye("001");
+        Date dateEmbouche = new Date();
+        employe.setDateEmbouche(dateEmbouche);
+
+        // Affichage de l'employé
+        System.out.println(employe);
+
+        // Comparaison de deux employés
+        Employe employe2 = new Employe();
+        employe2.setNom("Doe");
+        employe2.setPrenom("John");
+        employe2.setDateNaiss(dateNaiss);
+        employe2.setIdEmploye("001");
+        employe2.setDateEmbouche(dateEmbouche);
+
+        System.out.println(employe.equals(employe2)); //true
+    }
+
 
 }
