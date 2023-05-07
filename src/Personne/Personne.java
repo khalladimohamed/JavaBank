@@ -1,12 +1,13 @@
 package Personne;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
 public abstract class Personne {
     protected String nom;
     protected String prenom;
-    protected Date dateNaiss;
+    protected Calendar dateNaiss;
 
     public String getNom() {
         return nom;
@@ -24,21 +25,21 @@ public abstract class Personne {
         this.prenom = prenom;
     }
 
-    public Date getDateNaiss() {
+    public Calendar getDateNaiss() {
         return dateNaiss;
     }
 
-    public void setDateNaiss(Date dateNaiss) {
+    public void setDateNaiss(Calendar dateNaiss) {
         this.dateNaiss = dateNaiss;
     }
 
     public Personne() {
         this.nom = "";
         this.prenom = "";
-        this.dateNaiss = new Date();
+        this.dateNaiss = Calendar.getInstance();
     }
 
-    public Personne(String nom, String prenom, Date dateNaiss) {
+    public Personne(String nom, String prenom, Calendar dateNaiss) {
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaiss = dateNaiss;

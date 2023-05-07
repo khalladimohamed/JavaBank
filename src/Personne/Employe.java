@@ -2,6 +2,7 @@ package Personne;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -36,7 +37,7 @@ public class Employe extends Personne{
         this.dateEmbouche = dateEmbouche;
     }
 
-    public Employe(String nom, String prenom, Date dateNaiss, String idEmploye, Date dateEmbouche) {
+    public Employe(String nom, String prenom, Calendar dateNaiss, String idEmploye, Date dateEmbouche) {
         super(nom, prenom, dateNaiss);
         this.idEmploye = idEmploye;
         this.dateEmbouche = dateEmbouche;
@@ -67,16 +68,7 @@ public class Employe extends Personne{
         Employe employe = new Employe();
         employe.setNom("Doe");
         employe.setPrenom("John");
-
-        // Formatage de la date
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date dateNaiss = null;
-        try {
-            dateNaiss = sdf.parse("01/01/1990");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        employe.setDateNaiss(dateNaiss);
+        employe.setDateNaiss(Calendar.getInstance());
 
         employe.setIdEmploye("001");
         Date dateEmbouche = new Date();
@@ -89,7 +81,7 @@ public class Employe extends Personne{
         Employe employe2 = new Employe();
         employe2.setNom("Doe");
         employe2.setPrenom("John");
-        employe2.setDateNaiss(dateNaiss);
+        employe2.setDateNaiss(Calendar.getInstance());
         employe2.setIdEmploye("001");
         employe2.setDateEmbouche(dateEmbouche);
 

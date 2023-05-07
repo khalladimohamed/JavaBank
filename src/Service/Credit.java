@@ -3,6 +3,7 @@ package Service;
 import Personne.Client;
 import Personne.Employe;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -100,10 +101,10 @@ public class Credit extends ServiceBancaire {
 
     public static void main(String[] args) {
         // Création d'un employé
-        Employe employe = new Employe("John", "Doe", new Date(), "01", new Date());
+        Employe employe = new Employe("John", "Doe", Calendar.getInstance(), "01", new Date());
 
         // Création d'un client
-        Client client = new Client("Boo", "Mark", new Date(), 12345, "Ingénieur", 5000f);
+        Client client = new Client("Boo", "Mark", Calendar.getInstance(), 12345, "Ingénieur", 5000f);
 
         // Création d'un crédit
         Credit credit = new Credit(1, client, 10000f, 0.05f, employe, new Date());

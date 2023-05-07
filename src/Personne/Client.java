@@ -1,7 +1,8 @@
 package Personne;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import Agence.AgenceBancaire;
+
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -47,7 +48,7 @@ public class Client extends Personne{
         this.salaire = salaire;
     }
 
-    public Client(String nom, String prenom, Date dateNaiss, int numClient, String profession, Float salaire) {
+    public Client(String nom, String prenom, Calendar dateNaiss, int numClient, String profession, Float salaire) {
         super(nom, prenom, dateNaiss);
         this.numClient = numClient;
         this.profession = profession;
@@ -75,25 +76,18 @@ public class Client extends Personne{
         return numClient == client.numClient && Objects.equals(profession, client.profession) && Objects.equals(salaire, client.salaire);
     }
 
+
     public static void main(String[] args) {
-        // création d'une date de naissance pour le client
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateNaissance = null;
-        try {
-            dateNaissance = dateFormat.parse("1990-01-01");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
         // création d'un client avec les informations fournies
-        Client client1 = new Client("Doe", "John", dateNaissance, 12345, "Ingénieur", 5000f);
+        Client client1 = new Client("Doe", "John", Calendar.getInstance(), 12345, "Ingénieur", 5000f);
 
         // affichage du client créé
         System.out.println(client1);
 
         // création d'un autre client avec des informations différentes
         Date autreDateNaissance = new Date(); // utilisation de la date courante
-        Client client2 = new Client("Doe", "Jane", autreDateNaissance, 67890, "Professeur", 4000f);
+        Client client2 = new Client("Doe", "Jane", Calendar.getInstance(), 67890, "Professeur", 4000f);
 
         // affichage du deuxième client créé
         System.out.println(client2);

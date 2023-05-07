@@ -3,6 +3,7 @@ package Service;
 import Compte.CompteBancaire;
 import Personne.Client;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -93,7 +94,7 @@ public class CarteBancaire extends ServiceBancaire {
 
     public static void main(String[] args) {
         // Création d'un client
-        Client client = new Client("Boo", "Mark", new Date(), 12345, "Ingénieur", 5000f);
+        Client client = new Client("Boo", "Mark", Calendar.getInstance(), 12345, "Ingénieur", 5000f);
 
         // Création d'un compte bancaire
         CompteBancaire compte = new CompteBancaire(12, 500F, client);

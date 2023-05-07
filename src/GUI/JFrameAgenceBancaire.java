@@ -2,6 +2,8 @@ package GUI;
 
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,6 +19,7 @@ public class JFrameAgenceBancaire extends JFrame {
     private JButton buttonCreerCompte;
     private JTextField textFieldSoldeCompte;
     private JTable tableInfoClient;
+    private JScrollPane scrollPaneClient;
 
     public JFrameAgenceBancaire() {
 
@@ -134,6 +137,17 @@ public class JFrameAgenceBancaire extends JFrame {
             }
         });
 
+        Object[][] data = { {"Jean", "Dupont", "123456", "5000€", "1500€"},
+                {"Marie", "Martin", "789012", "2500€", "0€"},
+                {"Luc", "Leclerc", "345678", "10000€", "500€"} };
+
+        String[] columnNames = {"Nom", "Prénom", "Numéro de compte", "Solde", "Crédit"};
+
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+
+        tableInfoClient = new JTable(model);
+
+        scrollPaneClient.setViewportView(tableInfoClient);
 
 
 

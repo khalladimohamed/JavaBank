@@ -2,6 +2,7 @@ package Compte;
 
 import Personne.Client;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -65,7 +66,7 @@ public class CompteBancaire {
 
     public static void main(String[] args) {
         // Création d'un client
-        Client client1 = new Client("Doe", "John", new Date(), 12345, "Ingénieur", 5000f);
+        Client client1 = new Client("Doe", "John", Calendar.getInstance(), 12345, "Ingénieur", 5000f);
 
         // Création d'un compte bancaire
         CompteBancaire compte1 = new CompteBancaire(123456, 1000f, client1);
