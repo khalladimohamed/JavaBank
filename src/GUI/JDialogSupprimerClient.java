@@ -1,5 +1,8 @@
 package GUI;
 
+import Agence.AgenceBancaire;
+import Personne.Client;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,11 +16,8 @@ public class JDialogSupprimerClient extends JDialog
     private JButton buttonAnnuler;
     private JPanel mainPanel;
 
-    private String prenom;
-    private String nom;
-    private Date datenaiss;
-    private Date dateEmbouche;
-    private boolean ok;
+    private int numClient;
+
 
     public JDialogSupprimerClient()
     {
@@ -26,8 +26,10 @@ public class JDialogSupprimerClient extends JDialog
         setTitle("Supprimer client");
         pack();
         setModal(true);
-        ok = false;
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+        // Accéder à l'instance unique de AgenceBancaire
+        AgenceBancaire agenceBancaire = AgenceBancaire.getInstance();
 
         buttonAnnuler.addActionListener(new ActionListener() {
             @Override
@@ -38,26 +40,41 @@ public class JDialogSupprimerClient extends JDialog
         buttonSupprimerClient.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                prenom = textFieldNumClient.getText();
-                nom = textFieldNomEmploye.getText();
-                ok = true;
+                String valeurTexte = textFieldNumClient.getText();
+
+                try {
+                     numClient = Integer.parseInt(valeurTexte);
+
+
+                    // Recherche du client correspondant à l'ID fourni
+                    Client clientASupprimer = null;
+                    for (Client c : agenceBancaire.getClient()) {
+                        if (c.getNumClient() == numClient) {
+                            clientASupprimer = c;
+                            break;
+                        }
+                    }
+
+                    // Suppression du client de la liste
+                    if (clientASupprimer != null) {
+                        agenceBancaire.getClient().remove(clientASupprimer);
+                        System.out.println("Le client avec l'ID " + numClient + " a été supprimé.");
+                    } else {
+                        System.out.println("Aucun client trouvé avec l'ID " + numClient + ".");
+                    }
+                } catch (NumberFormatException ee) {
+                    // La valeur saisie n'est pas un entier valide
+                    // Gérez cette exception ou affichez un message d'erreur approprié
+                }
+
+
                 setVisible(false);
             }
         });
     }
 
-
-    public boolean isOk() {
-        return ok;
-    }
-
     public static void main(String[] args) {
         JDialogSupprimerClient dialog = new JDialogSupprimerClient();
         dialog.setVisible(true);
-        if (dialog.isOk())
-        {
-
-        }
-        dialog.dispose();
     }
 }

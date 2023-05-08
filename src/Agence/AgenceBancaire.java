@@ -95,4 +95,19 @@ public class AgenceBancaire implements Serializable {
             return dernierNumero + 1;
         }
     }
+
+    public String genererIdEmploye() {
+        int nouveauNumeroEmploye = 1;
+        for (Employe emp : employe) {
+            String id = emp.getIdEmploye();
+            if (id.startsWith("emp")) {
+                int numero = Integer.parseInt(id.substring(3));
+                if (numero >= nouveauNumeroEmploye) {
+                    nouveauNumeroEmploye = numero + 1;
+                }
+            }
+        }
+
+        return "emp" + nouveauNumeroEmploye;
+    }
 }

@@ -1,11 +1,15 @@
 package GUI;
 
 
+import Agence.AgenceBancaire;
+import Personne.Client;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class JFrameAgenceBancaire extends JFrame {
     private JPanel mainPanel;
@@ -66,6 +70,15 @@ public class JFrameAgenceBancaire extends JFrame {
         JMenu menuParametres = new JMenu("Paramètres");
         menuBar.add(menuParametres);
 
+
+        AgenceBancaire agenceBancaire = AgenceBancaire.getInstance();
+        ArrayList<Client> clients = agenceBancaire.getClient();
+
+        // Remplissage des JComboBox avec les clients
+        for (Client client : clients) {
+            comboBoxClientCompte.addItem(client);
+            comboBoxClientCredit.addItem(client);
+        }
 
         buttonCreerCompte.addActionListener(new ActionListener() {
             @Override

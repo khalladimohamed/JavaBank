@@ -1,7 +1,5 @@
 package Personne;
 
-import Agence.AgenceBancaire;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -59,11 +57,7 @@ public class Client extends Personne{
     public String toString() {
         return "Client{" +
                 "numClient=" + numClient +
-                ", profession='" + profession + '\'' +
-                ", salaire=" + salaire +
                 ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", dateNaiss=" + dateNaiss +
                 '}';
     }
 

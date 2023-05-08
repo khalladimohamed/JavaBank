@@ -101,7 +101,7 @@ public class Credit extends ServiceBancaire {
 
     public static void main(String[] args) {
         // Création d'un employé
-        Employe employe = new Employe("John", "Doe", Calendar.getInstance(), "01", new Date());
+        Employe employe = new Employe("John", "Doe", Calendar.getInstance(), "01", Calendar.getInstance());
 
         // Création d'un client
         Client client = new Client("Boo", "Mark", Calendar.getInstance(), 12345, "Ingénieur", 5000f);

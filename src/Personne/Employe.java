@@ -1,14 +1,12 @@
 package Personne;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
 public class Employe extends Personne{
     private String idEmploye;
-    private Date dateEmbouche;
+    private Calendar dateEmbouche;
 
     public String getIdEmploye() {
         return idEmploye;
@@ -18,26 +16,26 @@ public class Employe extends Personne{
         this.idEmploye = idEmploye;
     }
 
-    public Date getDateEmbouche() {
+    public Calendar getDateEmbouche() {
         return dateEmbouche;
     }
 
-    public void setDateEmbouche(Date dateEmbouche) {
+    public void setDateEmbouche(Calendar dateEmbouche) {
         this.dateEmbouche = dateEmbouche;
     }
 
     public Employe() {
         super();
         this.idEmploye = "";
-        this.dateEmbouche = new Date();
+        this.dateEmbouche = Calendar.getInstance();
     }
 
-    public Employe(String idEmploye, Date dateEmbouche) {
+    public Employe(String idEmploye, Calendar dateEmbouche) {
         this.idEmploye = idEmploye;
         this.dateEmbouche = dateEmbouche;
     }
 
-    public Employe(String nom, String prenom, Calendar dateNaiss, String idEmploye, Date dateEmbouche) {
+    public Employe(String nom, String prenom, Calendar dateNaiss, String idEmploye, Calendar dateEmbouche) {
         super(nom, prenom, dateNaiss);
         this.idEmploye = idEmploye;
         this.dateEmbouche = dateEmbouche;
@@ -71,7 +69,7 @@ public class Employe extends Personne{
         employe.setDateNaiss(Calendar.getInstance());
 
         employe.setIdEmploye("001");
-        Date dateEmbouche = new Date();
+        Calendar dateEmbouche = Calendar.getInstance();
         employe.setDateEmbouche(dateEmbouche);
 
         // Affichage de l'employé
