@@ -10,8 +10,7 @@ import java.util.Objects;
 public class Credit extends ServiceBancaire {
     private Float montant;
     private Float tauxInteret;
-    private Employe employe;
-    private Date dateSignature;
+    private Calendar dateSignature;
 
     public Float getMontant() {
         return montant;
@@ -29,29 +28,21 @@ public class Credit extends ServiceBancaire {
         this.tauxInteret = tauxInteret;
     }
 
-    public Employe getEmploye() {
-        return employe;
-    }
-
-    public void setEmploye(Employe employe) {
-        this.employe = employe;
-    }
-
-    public Date getDateSignature() {
+    public Calendar getDateSignature() {
         return dateSignature;
     }
 
-    public void setDateSignature(Date dateSignature) {
+    public void setDateSignature(Calendar dateSignature) {
         this.dateSignature = dateSignature;
     }
 
     @Override
-    public Date getDateInstauration() {
+    public Calendar getDateInstauration() {
         return getDateSignature();
     }
 
     @Override
-    public void setDateInstauration(Date dateInstauration) {
+    public void setDateInstauration(Calendar dateInstauration) {
         setDateSignature(dateInstauration);
     }
 
@@ -59,22 +50,19 @@ public class Credit extends ServiceBancaire {
         super();
         this.montant = Float.valueOf(0);
         this.tauxInteret = Float.valueOf(0);
-        this.employe = null;
-        this.dateSignature = new Date();
+        this.dateSignature = Calendar.getInstance();
     }
 
-    public Credit(Float montant, Float tauxInteret, Employe employe, Date dateSignature) {
+    public Credit(Float montant, Float tauxInteret, Calendar dateSignature) {
         this.montant = montant;
         this.tauxInteret = tauxInteret;
-        this.employe = employe;
         this.dateSignature = dateSignature;
     }
 
-    public Credit(int numService, Client client, Float montant, Float tauxInteret, Employe employe, Date dateSignature) {
+    public Credit(int numService, Client client, Float montant, Float tauxInteret, Calendar dateSignature) {
         super(numService, client);
         this.montant = montant;
         this.tauxInteret = tauxInteret;
-        this.employe = employe;
         this.dateSignature = dateSignature;
     }
 
@@ -83,7 +71,6 @@ public class Credit extends ServiceBancaire {
         return "Credit{" +
                 "montant=" + montant +
                 ", tauxInteret=" + tauxInteret +
-                ", employe=" + employe +
                 ", dateSignature=" + dateSignature +
                 ", numService=" + numService +
                 ", client=" + client +
@@ -96,18 +83,16 @@ public class Credit extends ServiceBancaire {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Credit credit = (Credit) o;
-        return Objects.equals(montant, credit.montant) && Objects.equals(tauxInteret, credit.tauxInteret) && Objects.equals(employe, credit.employe) && Objects.equals(dateSignature, credit.dateSignature);
+        return Objects.equals(montant, credit.montant) && Objects.equals(tauxInteret, credit.tauxInteret) && Objects.equals(dateSignature, credit.dateSignature);
     }
 
     public static void main(String[] args) {
-        // Création d'un employé
-        Employe employe = new Employe("John", "Doe", Calendar.getInstance(), "01", Calendar.getInstance());
 
         // Création d'un client
         Client client = new Client("Boo", "Mark", Calendar.getInstance(), 12345, "Ingénieur", 5000f);
 
         // Création d'un crédit
-        Credit credit = new Credit(1, client, 10000f, 0.05f, employe, new Date());
+        Credit credit = new Credit(1, client, 10000f, 0.05f, Calendar.getInstance());
 
         // Affichage des informations sur le crédit
         System.out.println(credit);

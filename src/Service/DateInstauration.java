@@ -1,9 +1,9 @@
 package Service;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public interface DateInstauration {
-    Date getDateInstauration();
+    Calendar getDateInstauration();
 
-    void setDateInstauration(Date dateInstauration);
+    void setDateInstauration(Calendar dateInstauration);
 }

@@ -7,7 +7,12 @@ import Personne.Employe;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.Properties;
 
 public class JDialogAjouterEmploye extends JDialog
 {
@@ -27,6 +32,7 @@ public class JDialogAjouterEmploye extends JDialog
     private String nom;
     private Calendar datenaiss;
     private Calendar dateEmbouche;
+    private Properties loginProperties;
 
     public JDialogAjouterEmploye()
     {
@@ -68,11 +74,23 @@ public class JDialogAjouterEmploye extends JDialog
                 Employe employe = new Employe(nom, prenom, datenaiss, agenceBancaire.genererIdEmploye(), dateEmbouche);
                 agenceBancaire.getEmploye().add(employe);
 
+                loginProperties = new Properties();
+                try {
+                    //Chargement des données
+                    loginProperties.load(new FileInputStream("Login.properties"));
+                    loginProperties.setProperty(prenom, nom);
+                    loginProperties.store(new FileOutputStream("Login.properties"), "Table contenant les Login et Mot de Passe de tout les employes");
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+
                 setVisible(false);
             }
         });
     }
-
 
     public static void main(String[] args) {
         JDialogAjouterEmploye dialog = new JDialogAjouterEmploye();

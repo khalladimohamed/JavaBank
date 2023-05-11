@@ -4,7 +4,6 @@ import Agence.AgenceBancaire;
 import Personne.Client;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
@@ -58,18 +57,14 @@ public class JDialogAjouterClient extends JDialog
                 datenaiss.set(Calendar.YEAR, year);
                 datenaiss.set(Calendar.MONTH, monthIndex);
                 datenaiss.set(Calendar.DAY_OF_MONTH, day);
-                String text = textFieldSalaire.getText();
-                try {
-                    salaire = Float.parseFloat(text);
-                } catch (NumberFormatException ex) {
-                    System.out.println("Invalid float value");
-                }
+                salaire = Float.parseFloat(textFieldSalaire.getText());
                 profession = textFieldProfession.getText();
 
                 // Accéder à l'instance unique de AgenceBancaire et ajouter le client
                 AgenceBancaire agenceBancaire = AgenceBancaire.getInstance();
                 Client client = new Client(nom, prenom, datenaiss, agenceBancaire.genererNumeroClient(), profession, salaire);
                 agenceBancaire.getClient().add(client);
+
 
                 setVisible(false);
             }

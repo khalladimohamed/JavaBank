@@ -1,6 +1,5 @@
 package Agence;
 
-
 import Compte.CompteBancaire;
 import Personne.Client;
 import Personne.Employe;
@@ -110,4 +109,37 @@ public class AgenceBancaire implements Serializable {
 
         return "emp" + nouveauNumeroEmploye;
     }
+
+    public int genererNumeroCompte() {
+        if (compteBancaire.isEmpty()) {
+            return 100000;
+        } else {
+            // Recherche du dernier numéro de compte
+            int dernierNumero = 0;
+            for (CompteBancaire c : compteBancaire) {
+                if (c.getNumCompte() > dernierNumero) {
+                    dernierNumero = c.getNumCompte();
+                }
+            }
+            // Incrémentation du dernier numéro et retour du nouveau numéro de compte
+            return dernierNumero + 1;
+        }
+    }
+
+    public int genererNumeroCredit() {
+        if (credit.isEmpty()) {
+            return 100;
+        } else {
+            // Recherche du dernier numéro de service
+            int dernierNumero = 0;
+            for (Credit c : credit) {
+                if (c.getNumService() > dernierNumero) {
+                    dernierNumero = c.getNumService();
+                }
+            }
+            // Incrémentation du dernier numéro et retour du nouveau numéro de compte
+            return dernierNumero + 1;
+        }
+    }
+
 }

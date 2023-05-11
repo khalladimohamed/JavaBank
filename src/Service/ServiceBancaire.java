@@ -1,7 +1,6 @@
 package Service;
 
 import Personne.Client;
-import java.util.Date;
 import java.util.Objects;
 
 public abstract class ServiceBancaire implements DateInstauration {

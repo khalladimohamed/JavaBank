@@ -6,7 +6,6 @@ import Personne.Client;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 
 public class JDialogSupprimerClient extends JDialog
 {
@@ -17,7 +16,6 @@ public class JDialogSupprimerClient extends JDialog
     private JPanel mainPanel;
 
     private int numClient;
-
 
     public JDialogSupprimerClient()
     {
@@ -37,36 +35,29 @@ public class JDialogSupprimerClient extends JDialog
                 setVisible(false);
             }
         });
+
         buttonSupprimerClient.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String valeurTexte = textFieldNumClient.getText();
 
-                try {
-                     numClient = Integer.parseInt(valeurTexte);
+                numClient = Integer.parseInt(textFieldNumClient.getText());
 
-
-                    // Recherche du client correspondant à l'ID fourni
-                    Client clientASupprimer = null;
-                    for (Client c : agenceBancaire.getClient()) {
-                        if (c.getNumClient() == numClient) {
-                            clientASupprimer = c;
-                            break;
-                        }
+                // Recherche du client correspondant à l'ID fourni
+                Client clientASupprimer = null;
+                for (Client c : agenceBancaire.getClient()) {
+                    if (c.getNumClient() == numClient) {
+                        clientASupprimer = c;
+                        break;
                     }
-
-                    // Suppression du client de la liste
-                    if (clientASupprimer != null) {
-                        agenceBancaire.getClient().remove(clientASupprimer);
-                        System.out.println("Le client avec l'ID " + numClient + " a été supprimé.");
-                    } else {
-                        System.out.println("Aucun client trouvé avec l'ID " + numClient + ".");
-                    }
-                } catch (NumberFormatException ee) {
-                    // La valeur saisie n'est pas un entier valide
-                    // Gérez cette exception ou affichez un message d'erreur approprié
                 }
 
+                // Suppression du client de la liste
+                if (clientASupprimer != null) {
+                    agenceBancaire.getClient().remove(clientASupprimer);
+                    System.out.println("Le client avec l'ID " + numClient + " a été supprimé.");
+                } else {
+                    System.out.println("Aucun client trouvé avec l'ID " + numClient + ".");
+                }
 
                 setVisible(false);
             }

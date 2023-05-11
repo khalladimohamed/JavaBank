@@ -11,7 +11,7 @@ public class CarteBancaire extends ServiceBancaire {
     private CompteBancaire Compte;
     private String type;
     private Float plafond;
-    private Date dateRemise;
+    private Calendar dateRemise;
 
     public CompteBancaire getCompte() {
         return Compte;
@@ -37,21 +37,21 @@ public class CarteBancaire extends ServiceBancaire {
         this.plafond = plafond;
     }
 
-    public Date getDateRemise() {
+    public Calendar getDateRemise() {
         return dateRemise;
     }
 
-    public void setDateRemise(Date dateRemise) {
+    public void setDateRemise(Calendar dateRemise) {
         this.dateRemise = dateRemise;
     }
 
     @Override
-    public Date getDateInstauration() {
+    public Calendar getDateInstauration() {
         return getDateRemise();
     }
 
     @Override
-    public void setDateInstauration(Date dateInstauration) {
+    public void setDateInstauration(Calendar dateInstauration) {
         setDateRemise(dateInstauration);
     }
 
@@ -60,10 +60,10 @@ public class CarteBancaire extends ServiceBancaire {
         Compte = null;
         this.type = "";
         this.plafond = Float.valueOf(0);
-        this.dateRemise = new Date();
+        this.dateRemise = Calendar.getInstance();
     }
 
-    public CarteBancaire(int numService, Client client, CompteBancaire compte, String type, Float plafond, Date dateRemise) {
+    public CarteBancaire(int numService, Client client, CompteBancaire compte, String type, Float plafond, Calendar dateRemise) {
         super(numService, client);
         Compte = compte;
         this.type = type;
@@ -100,7 +100,7 @@ public class CarteBancaire extends ServiceBancaire {
         CompteBancaire compte = new CompteBancaire(12, 500F, client);
 
         // Création d'une carte bancaire
-        CarteBancaire carte = new CarteBancaire(2, client, compte, "Visa", 1000.0f, new Date());
+        CarteBancaire carte = new CarteBancaire(2, client, compte, "Visa", 1000.0f, Calendar.getInstance());
 
         // Affichage des informations de la carte bancaire
         System.out.println(carte);
