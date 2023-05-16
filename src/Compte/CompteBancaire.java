@@ -2,10 +2,11 @@ package Compte;
 
 import Personne.Client;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
 
-public class CompteBancaire {
+public class CompteBancaire implements Serializable {
     int numCompte;
     Float solde;
     Client client;

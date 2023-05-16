@@ -1,10 +1,11 @@
 package Personne;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
-public abstract class Personne {
+public abstract class Personne implements Serializable {
     protected String nom;
     protected String prenom;
     protected Calendar dateNaiss;

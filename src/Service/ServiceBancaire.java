@@ -1,9 +1,11 @@
 package Service;
 
 import Personne.Client;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class ServiceBancaire implements DateInstauration {
+public abstract class ServiceBancaire implements DateInstauration, Serializable {
     protected int numService;
     protected Client client;
 

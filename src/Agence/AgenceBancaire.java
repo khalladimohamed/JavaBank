@@ -20,6 +20,7 @@ public class AgenceBancaire implements Serializable {
     private ArrayList<Credit> credit;
     private static AgenceBancaire instance;
 
+
     public ArrayList<Employe> getEmploye() {
         return employe;
     }

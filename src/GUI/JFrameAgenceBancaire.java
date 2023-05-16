@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -81,9 +82,27 @@ public class JFrameAgenceBancaire extends JFrame {
         menuClients.add(menuItemAfficherClient);
 
 
-        // Accéder à l'instance unique de AgenceBancaire et ajouter le client
-        AgenceBancaire agenceBancaire = AgenceBancaire.getInstance();
+        // Désérialisation
+        AgenceBancaire deserializedSingleton = null;
+        try {
+            FileInputStream fileIn = new FileInputStream("singleton.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            deserializedSingleton = (AgenceBancaire) in.readObject();
+            in.close();
+            fileIn.close();
+            System.out.println("Le singleton a été désérialisé.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
+
+        AgenceBancaire.getInstance().setEmploye(deserializedSingleton.getEmploye());
+        AgenceBancaire.getInstance().setClient(deserializedSingleton.getClient());
+        AgenceBancaire.getInstance().setCompteBancaire(deserializedSingleton.getCompteBancaire());
+        AgenceBancaire.getInstance().setCarteBacaire(deserializedSingleton.getCarteBacaire());
+        AgenceBancaire.getInstance().setCredit(deserializedSingleton.getCredit());
+
+        AgenceBancaire agenceBancaire = AgenceBancaire.getInstance();
 
         menuItemLogin.addActionListener(new ActionListener() {
             @Override
@@ -111,6 +130,46 @@ public class JFrameAgenceBancaire extends JFrame {
         menuItemQuitter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Sérialisation
+                AgenceBancaire singleton = AgenceBancaire.getInstance();
+
+                    FileOutputStream fileOut = null;
+
+                    try {
+                        fileOut = new FileOutputStream("singleton.ser");
+                    } catch (FileNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    ObjectOutputStream out = null;
+
+                    try {
+                        out = new ObjectOutputStream(fileOut);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    try {
+                        out.writeObject(singleton);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    try {
+                        out.close();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    try {
+                        fileOut.close();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    System.out.println("Le singleton a été sérialisé.");
+
+
                 System.exit(0);
             }
         });
