@@ -1,7 +1,6 @@
 package Personne;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 public class Employe extends Personne{

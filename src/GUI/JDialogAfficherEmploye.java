@@ -1,7 +1,6 @@
 package GUI;
 
 import Agence.AgenceBancaire;
-import Personne.Client;
 import Personne.Employe;
 
 import javax.swing.*;

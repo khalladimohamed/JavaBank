@@ -73,6 +73,7 @@ public class JDialogLogin extends JDialog
 
                         JFrameAgenceBancaire frame = new JFrameAgenceBancaire();
                         frame.setVisible(true);
+
                     }
                     else{
                         //Si on ne trouve pas le login
@@ -88,6 +89,7 @@ public class JDialogLogin extends JDialog
 
             }
         });
+
         buttonAnnuler.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -95,6 +97,7 @@ public class JDialogLogin extends JDialog
                 setVisible(false);
             }
         });
+
     }
     public static void main(String[] args) {
         JDialogLogin dialogLogin = new JDialogLogin(null,true,"Entrée en session...");

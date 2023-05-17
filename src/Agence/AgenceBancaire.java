@@ -6,9 +6,10 @@ import Personne.Employe;
 import Service.CarteBancaire;
 import Service.Credit;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
-
 
 public class AgenceBancaire implements Serializable {
 
@@ -19,6 +20,7 @@ public class AgenceBancaire implements Serializable {
     private ArrayList<CarteBancaire> carteBacaire;
     private ArrayList<Credit> credit;
     private static AgenceBancaire instance;
+    protected transient PropertyChangeSupport pcs;
 
 
     public ArrayList<Employe> getEmploye() {
@@ -59,6 +61,7 @@ public class AgenceBancaire implements Serializable {
 
     public void setCredit(ArrayList<Credit> credit) {
         this.credit = credit;
+        pcs.firePropertyChange("credit", null, credit);
     }
 
 
@@ -68,6 +71,7 @@ public class AgenceBancaire implements Serializable {
         compteBancaire = new ArrayList<CompteBancaire>();
         carteBacaire = new ArrayList<CarteBancaire>();
         credit = new ArrayList<Credit>();
+        pcs = new PropertyChangeSupport(this);
     }
 
     // Méthode statique pour obtenir l'instance unique de la classe
@@ -141,6 +145,15 @@ public class AgenceBancaire implements Serializable {
             // Incrémentation du dernier numéro et retour du nouveau numéro de compte
             return dernierNumero + 1;
         }
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener l)
+    {
+        pcs.addPropertyChangeListener(l);
+    }
+    public void removePropertyChangeListener(PropertyChangeListener l)
+    {
+        pcs.removePropertyChangeListener(l);
     }
 
 }

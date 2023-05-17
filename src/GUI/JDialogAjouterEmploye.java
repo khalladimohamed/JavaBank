@@ -1,7 +1,6 @@
 package GUI;
 
 import Agence.AgenceBancaire;
-import Personne.Client;
 import Personne.Employe;
 
 import javax.swing.*;
@@ -49,6 +48,7 @@ public class JDialogAjouterEmploye extends JDialog
                 setVisible(false);
             }
         });
+
         buttonAjouterEmploye.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

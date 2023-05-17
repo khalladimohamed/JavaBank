@@ -11,11 +11,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class JFrameAgenceBancaire extends JFrame {
+public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListener {
     private JPanel mainPanel;
     private JTextField textFieldMontantCredit;
     private JTextField textFieldTauxInteret;
@@ -82,25 +84,32 @@ public class JFrameAgenceBancaire extends JFrame {
         menuClients.add(menuItemAfficherClient);
 
 
+        AgenceBancaire.getInstance().addPropertyChangeListener(this);
+
+
         // Désérialisation
-        AgenceBancaire deserializedSingleton = null;
-        try {
-            FileInputStream fileIn = new FileInputStream("singleton.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            deserializedSingleton = (AgenceBancaire) in.readObject();
-            in.close();
-            fileIn.close();
-            System.out.println("Le singleton a été désérialisé.");
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        File file = new File("singleton.ser");
+        if(file.length() != 0) {
+
+            AgenceBancaire deserializedSingleton = null;
+            try {
+                FileInputStream fileIn = new FileInputStream("singleton.ser");
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                deserializedSingleton = (AgenceBancaire) in.readObject();
+                in.close();
+                fileIn.close();
+                System.out.println("Le singleton a été désérialisé.");
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            AgenceBancaire.getInstance().setEmploye(deserializedSingleton.getEmploye());
+            AgenceBancaire.getInstance().setClient(deserializedSingleton.getClient());
+            AgenceBancaire.getInstance().setCompteBancaire(deserializedSingleton.getCompteBancaire());
+            AgenceBancaire.getInstance().setCarteBacaire(deserializedSingleton.getCarteBacaire());
+            AgenceBancaire.getInstance().setCredit(deserializedSingleton.getCredit());
+
         }
-
-
-        AgenceBancaire.getInstance().setEmploye(deserializedSingleton.getEmploye());
-        AgenceBancaire.getInstance().setClient(deserializedSingleton.getClient());
-        AgenceBancaire.getInstance().setCompteBancaire(deserializedSingleton.getCompteBancaire());
-        AgenceBancaire.getInstance().setCarteBacaire(deserializedSingleton.getCarteBacaire());
-        AgenceBancaire.getInstance().setCredit(deserializedSingleton.getCredit());
 
         AgenceBancaire agenceBancaire = AgenceBancaire.getInstance();
 
@@ -130,45 +139,24 @@ public class JFrameAgenceBancaire extends JFrame {
         menuItemQuitter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 // Sérialisation
                 AgenceBancaire singleton = AgenceBancaire.getInstance();
 
-                    FileOutputStream fileOut = null;
+                FileOutputStream fileOut = null;
+                ObjectOutputStream out = null;
 
-                    try {
-                        fileOut = new FileOutputStream("singleton.ser");
-                    } catch (FileNotFoundException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                try {
+                    fileOut = new FileOutputStream("singleton.ser");
+                    out = new ObjectOutputStream(fileOut);
+                    out.writeObject(singleton);
+                    out.close();
+                    fileOut.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
 
-                    ObjectOutputStream out = null;
-
-                    try {
-                        out = new ObjectOutputStream(fileOut);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-
-                    try {
-                        out.writeObject(singleton);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-
-                    try {
-                        out.close();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-
-                    try {
-                        fileOut.close();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-
-                    System.out.println("Le singleton a été sérialisé.");
-
+                System.out.println("Le singleton a été sérialisé.");
 
                 System.exit(0);
             }
@@ -308,6 +296,9 @@ public class JFrameAgenceBancaire extends JFrame {
 
                 Credit credit = new Credit(agenceBancaire.genererNumeroCredit(), client, montant, tauxInteret, Calendar.getInstance());
                 agenceBancaire.getCredit().add(credit);
+
+                //Pour envoyer le notify (beans)
+                agenceBancaire.setCredit(agenceBancaire.getCredit());
             }
         });
 
@@ -356,4 +347,42 @@ public class JFrameAgenceBancaire extends JFrame {
         frame.setVisible(true);
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+        // Mettez à jour votre JTable ici en utilisant les nouvelles valeurs
+        DefaultTableModel model = (DefaultTableModel) tableInfoClient.getModel();
+
+        //vider la table pour la remplir apres
+        model.setRowCount(0);
+
+        // Récupérer l'instance unique de AgenceBancaire
+        AgenceBancaire agence = AgenceBancaire.getInstance();
+        ArrayList<Credit> credits = agence.getCredit();
+        ArrayList<CompteBancaire> compteBancaires = agence.getCompteBancaire();
+
+        // Ajouter chaque credit au modèle de la table
+        for (Credit credit : credits) {
+            Object[] rowData = {
+                    credit.getClient().getNom(),
+                    credit.getClient().getPrenom(),
+                    null,
+                    null,
+                    credit.getMontant()
+            };
+
+            //Ajouter les informations manqaunte sur le compte bancaire pour chaque credit
+            for(CompteBancaire c : compteBancaires){
+                if(c.getClient().equals(credit.getClient())){
+                    rowData[2] = c.getNumCompte();
+                    rowData[3] = c.getSolde();
+                    break;
+                }
+
+            }
+
+            model.addRow(rowData);
+        }
+
+    }
 }

@@ -1,10 +1,8 @@
 package Service;
 
 import Personne.Client;
-import Personne.Employe;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 public class Credit extends ServiceBancaire {

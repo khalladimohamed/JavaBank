@@ -2,7 +2,6 @@ package Personne;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 public abstract class Personne implements Serializable {

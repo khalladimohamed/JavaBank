@@ -55,11 +55,14 @@ public class Client extends Personne{
 
     @Override
     public String toString() {
-        return String.valueOf(numClient);
-                /*"Client{" +
+        return "Client{" +
                 "numClient=" + numClient +
+                ", profession='" + profession + '\'' +
+                ", salaire=" + salaire +
                 ", nom='" + nom + '\'' +
-                '}';*/
+                ", prenom='" + prenom + '\'' +
+                ", dateNaiss=" + dateNaiss +
+                '}';
     }
 
     @Override

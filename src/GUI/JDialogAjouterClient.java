@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 
-
 public class JDialogAjouterClient extends JDialog
 {
     private JTextField textFieldNomClient;
