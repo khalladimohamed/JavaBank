@@ -150,7 +150,7 @@
           </grid>
         </constraints>
         <properties>
-          <icon value="Logo/istockphoto-1378237265-170667a.jpg"/>
+          <icon value="GUI/istockphoto-1378237265-170667a.jpg"/>
           <text value=""/>
         </properties>
       </component>

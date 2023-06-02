@@ -5,6 +5,8 @@ import Compte.CompteBancaire;
 import Personne.Client;
 import Service.CarteBancaire;
 import Service.Credit;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -41,7 +43,7 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
 
     public JFrameAgenceBancaire() {
 
-        setSize(1400,600);
+        setSize(1400, 600);
         setTitle("Application JAVA Bank");
         setContentPane(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,7 +91,7 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
 
         // Désérialisation
         File file = new File("singleton.ser");
-        if(file.length() != 0) {
+        if (file.length() != 0) {
 
             AgenceBancaire deserializedSingleton = null;
             try {
@@ -116,7 +118,7 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
         menuItemLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialogLogin dialog = new JDialogLogin(null,true,"Entrée en session...");
+                JDialogLogin dialog = new JDialogLogin(null, true, "Entrée en session...");
                 dialog.setVisible(true);
             }
         });
@@ -130,7 +132,7 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
                     window.dispose();
                 }
 
-                JDialogLogin dialog = new JDialogLogin(null,true,"Entrée en session...");
+                JDialogLogin dialog = new JDialogLogin(null, true, "Entrée en session...");
                 dialog.setVisible(true);
             }
         });
@@ -232,7 +234,7 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
                     }
                 }
 
-                if(client != null){
+                if (client != null) {
                     int numPack = agenceBancaire.genererNumeroCompte();
                     CompteBancaire compteBancaire = new CompteBancaire(numPack, solde, client);
                     CarteBancaire carteBancaire = new CarteBancaire(numPack, client, compteBancaire, "Visa", 2000F, Calendar.getInstance());
@@ -241,8 +243,7 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
                     agenceBancaire.getCarteBacaire().add(carteBancaire);
 
                     JOptionPane.showMessageDialog(null, "Le compte bancaire est creé");
-                }
-                else {
+                } else {
                     JOptionPane.showMessageDialog(null, "Aucun client trouvé avec cette numero");
                 }
             }
@@ -265,7 +266,7 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
                     }
                 }
 
-                if(compteBancaireAsupprimer != null){
+                if (compteBancaireAsupprimer != null) {
 
                     for (CarteBancaire ca : agenceBancaire.getCarteBacaire()) {
                         if (ca.getNumService() == numCompte) {
@@ -292,8 +293,7 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
                     } else {
                         JOptionPane.showMessageDialog(null, "Ce compte bancaire est lié a un credit");
                     }
-                }
-                else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Aucun compte bancaire trouvé avec cette ID");
                 }
             }
@@ -306,7 +306,7 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
 
                 numClientCredit = Integer.parseInt(textFieldNumClientCredit.getText());
                 montant = Float.parseFloat(textFieldMontantCredit.getText());
-                tauxInteret =  Float.parseFloat(textFieldTauxInteret.getText());
+                tauxInteret = Float.parseFloat(textFieldTauxInteret.getText());
 
                 // Recherche du client correspondant à l'ID fourni
                 Client client = null;
@@ -317,7 +317,7 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
                     }
                 }
 
-                if(client != null){
+                if (client != null) {
                     Credit credit = new Credit(agenceBancaire.genererNumeroCredit(), client, montant, tauxInteret, Calendar.getInstance());
                     agenceBancaire.getCredit().add(credit);
 
@@ -325,8 +325,7 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
                     agenceBancaire.setCredit(agenceBancaire.getCredit());
 
                     JOptionPane.showMessageDialog(null, "Le credit est attribué");
-                }
-                else {
+                } else {
                     JOptionPane.showMessageDialog(null, "Le client n'existe pas");
                 }
             }
@@ -352,8 +351,8 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
             };
 
             //Ajouter les informations manqaunte sur le compte bancaire pour chaque credit
-            for(CompteBancaire c : compteBancaires){
-                if(c.getClient().equals(credit.getClient())){
+            for (CompteBancaire c : compteBancaires) {
+                if (c.getClient().equals(credit.getClient())) {
                     rowData[2] = c.getNumCompte();
                     rowData[3] = c.getSolde();
                     break;
@@ -400,8 +399,8 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
             };
 
             //Ajouter les informations manqaunte sur le compte bancaire pour chaque credit
-            for(CompteBancaire c : compteBancaires){
-                if(c.getClient().equals(credit.getClient())){
+            for (CompteBancaire c : compteBancaires) {
+                if (c.getClient().equals(credit.getClient())) {
                     rowData[2] = c.getNumCompte();
                     rowData[3] = c.getSolde();
                     break;
@@ -411,4 +410,78 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
             model.addRow(rowData);
         }
     }
+
+    {
+// GUI initializer generated by IntelliJ IDEA GUI Designer
+// >>> IMPORTANT!! <<<
+// DO NOT EDIT OR ADD ANY CODE HERE!
+        $$$setupUI$$$();
+    }
+
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
+    private void $$$setupUI$$$() {
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayoutManager(6, 9, new Insets(0, 0, 0, 0), -1, -1));
+        final JLabel label1 = new JLabel();
+        label1.setText("Numero de client :");
+        mainPanel.add(label1, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(10, 10), null, 0, false));
+        final JLabel label2 = new JLabel();
+        label2.setText("Numero du compte bancaire :");
+        mainPanel.add(label2, new GridConstraints(2, 0, 2, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label3 = new JLabel();
+        label3.setText("Numero de client :");
+        mainPanel.add(label3, new GridConstraints(4, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label4 = new JLabel();
+        label4.setText("Montant :");
+        mainPanel.add(label4, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label5 = new JLabel();
+        label5.setText("Taux d'interet :");
+        mainPanel.add(label5, new GridConstraints(4, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        textFieldMontantCredit = new JTextField();
+        mainPanel.add(textFieldMontantCredit, new GridConstraints(4, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        textFieldTauxInteret = new JTextField();
+        mainPanel.add(textFieldTauxInteret, new GridConstraints(4, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        buttonAttribuerCredit = new JButton();
+        buttonAttribuerCredit.setText("Attribuer un credit");
+        mainPanel.add(buttonAttribuerCredit, new GridConstraints(4, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        textFieldNumCompteBancaire = new JTextField();
+        mainPanel.add(textFieldNumCompteBancaire, new GridConstraints(2, 4, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        buttonSupprimerCompte = new JButton();
+        buttonSupprimerCompte.setText("Supprimer un compte bancaire");
+        mainPanel.add(buttonSupprimerCompte, new GridConstraints(2, 7, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        buttonCreerCompte = new JButton();
+        buttonCreerCompte.setText("Creer un compte bancaire");
+        mainPanel.add(buttonCreerCompte, new GridConstraints(1, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label6 = new JLabel();
+        label6.setText("Solde :");
+        mainPanel.add(label6, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        textFieldSoldeCompte = new JTextField();
+        mainPanel.add(textFieldSoldeCompte, new GridConstraints(1, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        scrollPaneClient = new JScrollPane();
+        mainPanel.add(scrollPaneClient, new GridConstraints(5, 0, 1, 8, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        tableInfoClient = new JTable();
+        scrollPaneClient.setViewportView(tableInfoClient);
+        textFieldNumClientCompte = new JTextField();
+        mainPanel.add(textFieldNumClientCompte, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        textFieldNumClientCredit = new JTextField();
+        mainPanel.add(textFieldNumClientCredit, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label7 = new JLabel();
+        label7.setIcon(new ImageIcon(getClass().getResource("/GUI/istockphoto-1378237265-170667a.jpg")));
+        label7.setText("");
+        mainPanel.add(label7, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(29, 134), null, 0, false));
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    public JComponent $$$getRootComponent$$$() {
+        return mainPanel;
+    }
+
 }
