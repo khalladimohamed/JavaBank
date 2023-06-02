@@ -87,6 +87,7 @@ public class JDialogAjouterEmploye extends JDialog
                 }
 
 
+                JOptionPane.showMessageDialog(null, "L'employe a été ajouté");
                 setVisible(false);
             }
         });

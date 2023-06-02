@@ -1,6 +1,7 @@
 package GUI;
 
 import Agence.AgenceBancaire;
+import Personne.Client;
 import Personne.Employe;
 
 import javax.swing.*;
@@ -41,9 +42,9 @@ public class JDialogSupprimerEmploye extends JDialog
             @Override
             public void actionPerformed(ActionEvent e) {
                 idEmploye = textFieldIdEmploye.getText();
-                // Récupération de la liste des employés
-                ArrayList<Employe> employes = agenceBancaire.getEmploye();
 
+                /*// Récupération de la liste des employés
+                ArrayList<Employe> employes = agenceBancaire.getEmploye();
                 // Recherche de l'employé correspondant à l'ID saisi
                 for (Employe employe : employes) {
                     if (employe.getIdEmploye().equals(idEmploye)) {
@@ -51,6 +52,24 @@ public class JDialogSupprimerEmploye extends JDialog
                         employes.remove(employe);
                         break;
                     }
+                }*/
+
+                // Recherche du client correspondant à l'ID fourni
+                Employe employeASupprimer = null;
+                for (Employe emp : agenceBancaire.getEmploye()) {
+                    if (emp.getIdEmploye() == idEmploye) {
+                        employeASupprimer = emp;
+                        break;
+                    }
+                }
+
+                // Suppression du client de la liste
+                if (employeASupprimer != null) {
+                    agenceBancaire.getEmploye().remove(employeASupprimer);
+
+                    JOptionPane.showMessageDialog(null, "L'employe a été supprimé");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Aucun employe trouvé avec cette ID");
                 }
 
                 setVisible(false);

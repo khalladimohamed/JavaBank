@@ -65,6 +65,7 @@ public class JDialogAjouterClient extends JDialog
                 agenceBancaire.getClient().add(client);
 
 
+                JOptionPane.showMessageDialog(null, "Le client a été ajouté");
                 setVisible(false);
             }
         });

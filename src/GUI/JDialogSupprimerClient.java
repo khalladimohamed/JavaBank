@@ -1,7 +1,9 @@
 package GUI;
 
 import Agence.AgenceBancaire;
+import Compte.CompteBancaire;
 import Personne.Client;
+import Service.Credit;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -51,12 +53,34 @@ public class JDialogSupprimerClient extends JDialog
                     }
                 }
 
+                // Verifier si le client est lier a un compte bancaire
+                int clientLierCompte = 0;
+                for (CompteBancaire cb : agenceBancaire.getCompteBancaire()) {
+                    if (cb.getClient().equals(clientASupprimer)) {
+                        clientLierCompte = 1;
+                        break;
+                    }
+                }
+
+                // Verifier si le client est lier a un credit
+                int clientLierCredit = 0;
+                for (Credit cr : agenceBancaire.getCredit()) {
+                    if (cr.getClient().equals(clientASupprimer)) {
+                        clientLierCredit = 1;
+                        break;
+                    }
+                }
+
                 // Suppression du client de la liste
-                if (clientASupprimer != null) {
+                if (clientASupprimer != null && clientLierCompte == 0 && clientLierCredit == 0) {
                     agenceBancaire.getClient().remove(clientASupprimer);
-                    System.out.println("Le client avec l'ID " + numClient + " a été supprimé.");
+
+                    JOptionPane.showMessageDialog(null, "Le client a été supprimé");
                 } else {
-                    System.out.println("Aucun client trouvé avec l'ID " + numClient + ".");
+                    if(clientLierCompte == 0 && clientLierCredit == 0)
+                        JOptionPane.showMessageDialog(null, "Aucun client trouvé avec cette ID");
+                    else
+                        JOptionPane.showMessageDialog(null, "Ce client est lié a un compte bancaire ou un credit");
                 }
 
                 setVisible(false);

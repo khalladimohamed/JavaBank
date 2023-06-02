@@ -78,11 +78,11 @@ public class JDialogLogin extends JDialog
                     else{
                         //Si on ne trouve pas le login
                         if(tmpMotDePasse.equals("KO")){
-                            /*ErrorMsg.setText("Login Introuvable");*/
+                            JOptionPane.showMessageDialog(null, "Login Introuvable");
                         }
                         //Si Mdp Incorrecte
                         else{
-                            /*ErrorMsg.setText("Mdp Incorrecte");*/
+                            JOptionPane.showMessageDialog(null, "Mdp Incorrecte");
                         }
                     }
                 }

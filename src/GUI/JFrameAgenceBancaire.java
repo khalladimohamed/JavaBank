@@ -232,12 +232,19 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
                     }
                 }
 
-                int numPack = agenceBancaire.genererNumeroCompte();
-                CompteBancaire compteBancaire = new CompteBancaire(numPack, solde, client);
-                CarteBancaire carteBancaire = new CarteBancaire(numPack, client, compteBancaire, "Visa", 2000F, Calendar.getInstance());
+                if(client != null){
+                    int numPack = agenceBancaire.genererNumeroCompte();
+                    CompteBancaire compteBancaire = new CompteBancaire(numPack, solde, client);
+                    CarteBancaire carteBancaire = new CarteBancaire(numPack, client, compteBancaire, "Visa", 2000F, Calendar.getInstance());
 
-                agenceBancaire.getCompteBancaire().add(compteBancaire);
-                agenceBancaire.getCarteBacaire().add(carteBancaire);
+                    agenceBancaire.getCompteBancaire().add(compteBancaire);
+                    agenceBancaire.getCarteBacaire().add(carteBancaire);
+
+                    JOptionPane.showMessageDialog(null, "Le compte bancaire est creé");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Aucun client trouvé avec cette numero");
+                }
             }
         });
 
@@ -252,26 +259,42 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
                 CarteBancaire carteBancaireAsupprimer = null;
 
                 for (CompteBancaire c : agenceBancaire.getCompteBancaire()) {
-                    if (c.getNumCompte() == numClientCompte) {
+                    if (c.getNumCompte() == numCompte) {
                         compteBancaireAsupprimer = c;
                         break;
                     }
                 }
 
-                for (CarteBancaire ca : agenceBancaire.getCarteBacaire()) {
-                    if (ca.getNumService() == numClientCompte) {
-                        carteBancaireAsupprimer = ca;
-                        break;
+                if(compteBancaireAsupprimer != null){
+
+                    for (CarteBancaire ca : agenceBancaire.getCarteBacaire()) {
+                        if (ca.getNumService() == numCompte) {
+                            carteBancaireAsupprimer = ca;
+                            break;
+                        }
+                    }
+
+                    // Verifier si le compte bancaire est lier a un credit
+                    int compteLierCredit = 0;
+                    for (Credit cr : agenceBancaire.getCredit()) {
+                        if (cr.getClient().equals(compteBancaireAsupprimer.getClient())) {
+                            compteLierCredit = 1;
+                            break;
+                        }
+                    }
+
+                    // Suppression du compte bancaire de la liste
+                    if (compteBancaireAsupprimer != null && compteLierCredit == 0) {
+                        agenceBancaire.getCompteBancaire().remove(compteBancaireAsupprimer);
+                        agenceBancaire.getCarteBacaire().remove(carteBancaireAsupprimer);
+
+                        JOptionPane.showMessageDialog(null, "Le compte bancaire a été supprimé");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ce compte bancaire est lié a un credit");
                     }
                 }
-
-                // Suppression du compte bancaire de la liste
-                if (compteBancaireAsupprimer != null) {
-                    agenceBancaire.getCompteBancaire().remove(compteBancaireAsupprimer);
-                    agenceBancaire.getCarteBacaire().remove(carteBancaireAsupprimer);
-                    System.out.println("Le compte bancaire avec l'ID " + numCompte + " a été supprimé.");
-                } else {
-                    System.out.println("Aucun compte bancaire trouvé avec l'ID " + numCompte + ".");
+                else{
+                    JOptionPane.showMessageDialog(null, "Aucun compte bancaire trouvé avec cette ID");
                 }
             }
         });
@@ -288,23 +311,29 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
                 // Recherche du client correspondant à l'ID fourni
                 Client client = null;
                 for (Client c : agenceBancaire.getClient()) {
-                    if (c.getNumClient() == numClientCompte) {
+                    if (c.getNumClient() == numClientCredit) {
                         client = c;
                         break;
                     }
                 }
 
-                Credit credit = new Credit(agenceBancaire.genererNumeroCredit(), client, montant, tauxInteret, Calendar.getInstance());
-                agenceBancaire.getCredit().add(credit);
+                if(client != null){
+                    Credit credit = new Credit(agenceBancaire.genererNumeroCredit(), client, montant, tauxInteret, Calendar.getInstance());
+                    agenceBancaire.getCredit().add(credit);
 
-                //Pour envoyer le notify (beans)
-                agenceBancaire.setCredit(agenceBancaire.getCredit());
+                    //Pour envoyer le notify (beans)
+                    agenceBancaire.setCredit(agenceBancaire.getCredit());
+
+                    JOptionPane.showMessageDialog(null, "Le credit est attribué");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Le client n'existe pas");
+                }
             }
         });
 
 
         String[] columnNames = {"Nom", "Prénom", "Numéro de compte", "Solde", "Crédit"};
-
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
         // Récupérer l'instance unique de AgenceBancaire
@@ -336,7 +365,6 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
         }
 
         tableInfoClient = new JTable(model);
-
         scrollPaneClient.setViewportView(tableInfoClient);
 
     }
@@ -350,7 +378,7 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        // Mettez à jour votre JTable ici en utilisant les nouvelles valeurs
+        // Mettez à jour ma JTable ici en utilisant les nouvelles valeurs
         DefaultTableModel model = (DefaultTableModel) tableInfoClient.getModel();
 
         //vider la table pour la remplir apres
@@ -378,11 +406,9 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
                     rowData[3] = c.getSolde();
                     break;
                 }
-
             }
 
             model.addRow(rowData);
         }
-
     }
 }
