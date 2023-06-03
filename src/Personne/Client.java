@@ -1,13 +1,15 @@
 package Personne;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
+import Beans.AgeClientListener;
+import Beans.AgeClientEvent;
+import java.util.*;
 
-public class Client extends Personne{
+public class Client extends Personne
+{
     private int numClient;
     private String profession;
     private Float salaire;
+    protected transient List<AgeClientListener> ageClientListeners;
 
     public int getNumClient() {
         return numClient;
@@ -33,17 +35,25 @@ public class Client extends Personne{
         this.salaire = salaire;
     }
 
+    public void setDateNaiss(Calendar dateNaiss) {
+        super.setDateNaiss(dateNaiss);
+        int age = calculerAge(dateNaiss);
+        fireAgeClientAffiche(age);
+    }
+
     public Client() {
         super();
         this.numClient = 0;
         this.profession = "";
         this.salaire = Float.valueOf(0);
+        ageClientListeners = new ArrayList<>();
     }
 
     public Client(int numClient, String profession, Float salaire) {
         this.numClient = numClient;
         this.profession = profession;
         this.salaire = salaire;
+        ageClientListeners = new ArrayList<>();
     }
 
     public Client(String nom, String prenom, Calendar dateNaiss, int numClient, String profession, Float salaire) {
@@ -51,6 +61,7 @@ public class Client extends Personne{
         this.numClient = numClient;
         this.profession = profession;
         this.salaire = salaire;
+        ageClientListeners = new ArrayList<>();
     }
 
     @Override
@@ -74,6 +85,28 @@ public class Client extends Personne{
         return numClient == client.numClient && Objects.equals(profession, client.profession) && Objects.equals(salaire, client.salaire);
     }
 
+    private int calculerAge(Calendar dateNaissance) {
+        Calendar currentDate = Calendar.getInstance();
+        int age = currentDate.get(Calendar.YEAR) - dateNaissance.get(Calendar.YEAR);
+
+        return age;
+    }
+
+    public void addAgeClientListener(AgeClientListener listener) {
+        ageClientListeners.add(listener);
+    }
+
+    public void removeAgeClientListener(AgeClientListener listener) {
+        ageClientListeners.remove(listener);
+    }
+
+    // Lorsque on calcule l'âge, on appele cette méthode pour informer les écouteurs
+    private void fireAgeClientAffiche(int age) {
+        AgeClientEvent event = new AgeClientEvent(this, age);
+        for (AgeClientListener listener : ageClientListeners) {
+            listener.ageClientAffiche(event);
+        }
+    }
 
     public static void main(String[] args) {
 

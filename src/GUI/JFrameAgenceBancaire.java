@@ -86,14 +86,22 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
         menuClients.add(menuItemAfficherClient);
 
 
+        JMenu menuComptes = new JMenu("Comptes bancaires");
+        menuBar.add(menuComptes);
+        JMenuItem menuItemAfficherComptes = new JMenuItem("Afficher");
+        menuComptes.add(menuItemAfficherComptes);
+
+
         AgenceBancaire.getInstance().addPropertyChangeListener(this);
 
 
         // Désérialisation
         File file = new File("singleton.ser");
+
         if (file.length() != 0) {
 
             AgenceBancaire deserializedSingleton = null;
+
             try {
                 FileInputStream fileIn = new FileInputStream("singleton.ser");
                 ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -218,6 +226,14 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
             }
         });
 
+        menuItemAfficherComptes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JDialogAfficherCompte dialog = new JDialogAfficherCompte();
+                dialog.setVisible(true);
+            }
+        });
+
 
         buttonCreerCompte.addActionListener(new ActionListener() {
             @Override
@@ -244,7 +260,7 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
 
                     JOptionPane.showMessageDialog(null, "Le compte bancaire est creé");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Aucun client trouvé avec cette numero");
+                    JOptionPane.showMessageDialog(null, "Aucun client trouvé avec ce numero");
                 }
             }
         });
@@ -472,7 +488,7 @@ public class JFrameAgenceBancaire extends JFrame implements PropertyChangeListen
         textFieldNumClientCredit = new JTextField();
         mainPanel.add(textFieldNumClientCredit, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label7 = new JLabel();
-        label7.setIcon(new ImageIcon(getClass().getResource("/GUI/istockphoto-1378237265-170667a.jpg")));
+        label7.setIcon(new ImageIcon(getClass().getResource("/GUI/logo.jpg")));
         label7.setText("");
         mainPanel.add(label7, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(29, 134), null, 0, false));
     }
